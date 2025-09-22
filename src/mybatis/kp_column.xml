@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kdaColumn">
+	
+ 
+	<select id="selectEbookColumnCount" parameterType="hashmap" resultType="int">
+	SELECT
+		COUNT(idx)
+	FROM Tbl_KDA_COLUMN
+	WHERE kda_code = 'EBOOK'
+	</select>
+	
+	<select id="selectEbookColumnListHelper" parameterType="hashmap" resultType="hashmap">
+    SELECT 
+		  num
+		, idx
+		, (SELECT imagename 
+			FROM (select ROW_NUMBER() OVER( order by kda_yyyy DESC, kda_mm  DESC ) AS num , imagename
+					from Tbl_KDA_COLUMN
+				   WHERE kda_code = 'EBOOK'
+					 and kda_yn = 'Y') A
+			WHERE NUM = 1) AS imagename
+		, kda_title
+		, kda_yyyy
+		, kda_mm
+		, kda_url
+		, kda_yn
+	FROM (
+	SELECT
+	      ROW_NUMBER() OVER( order by kda_yyyy desc, kda_mm ) AS num 
+		, idx
+		, kda_title  
+		, kda_yyyy
+		, kda_mm
+		, kda_url
+		, kda_yn
+	FROM Tbl_KDA_COLUMN
+	WHERE kda_code = 'EBOOK'
+	)  A WHERE num BETWEEN #{startNum} AND #{endNum} 
+	</select>
+	 
+	
+</mapper>
+

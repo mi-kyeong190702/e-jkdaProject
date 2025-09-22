@@ -1,0 +1,17 @@
+@charset "UTF-8";
+/* Utility classes */
+:root{ --content-w:1000px; }
+.container{ max-width: var(--container-w); margin:0 auto; padding:0 16px; box-sizing:border-box; }
+.flex-row{ display:flex; align-items:center; gap:8px; }
+.ml10{ margin-left:10px; }
+.hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+.cm{ color:#006ab6; }
+.s_page{ box-sizing: border-box;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;                  /* 가운데 정렬 */
+  padding-inline: var(--gutter);   /* 좌우 여백 */
+  display: flex;
+  flex-direction: column;          /* 위/아래로 쌓기 */
+  align-items: stretch;            /* 내부를 가로 100%로 */ 
+}

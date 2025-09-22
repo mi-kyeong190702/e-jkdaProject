@@ -1,0 +1,309 @@
+@charset "UTF-8";
+
+.container{
+  box-sizing: border-box;
+  max-width: var(--container-w);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+/* Header */
+.jkda-header{
+  position:relative;
+  background:
+  linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.85) 80%, #fff 100%),
+  url("/images/bg_img.png") repeat-x,
+  linear-gradient(180deg, #e9eef4, #eef3f7);
+  /*
+    radial-gradient(120px 40px at 10% 50%, #ffffff66 40%, transparent 41%) repeat-x,
+    radial-gradient(120px 40px at 40% 50%, #ffffff66 40%, transparent 41%) repeat-x,
+    linear-gradient(180deg, #e9eef4, #eef3f7);
+  */ 
+  background-position:0 0, 180px 0, 0 0;
+  border-bottom:1px solid var(--line);
+}
+.jkda-header__inner{display:grid; grid-template-columns: 1fr 1.2fr auto; gap:16px; align-items:center; padding:14px clamp(16px,4vw,36px); min-height:78px;
+max-width: var(--container-w);
+  margin: 0 auto;
+  padding:14px 0; }
+.jkda-left{display:flex; align-items:center; gap:12px;align-self: end;}
+.issn{display:inline-flex; flex-direction:column; gap:2px; background:rgba(255,255,255,.8); border:1px solid #d9e2ec; border-left:4px solid #93a4b3; padding:6px 10px 6px 8px; border-radius:6px; font-size:12px; color:#334e68;text-align: right;align-items: flex-end;}
+.issn b{color:#1f3b57}
+.jkda-right{display:flex; align-items:center; gap:12px;}
+.logo-grad{font-weight:800; font-size:clamp(28px,4.2vw,40px); letter-spacing:.5px; line-height:1; background:linear-gradient(90deg,var(--brand-1),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.logo-text{display:flex; flex-direction:column; line-height:1.1}
+.logo-text .title{font-size:14px; font-weight:700; color:#8c3b2f; white-space:nowrap}
+.logo-text .subtitle{font-size:11px; color:#5f6c7b; white-space:nowrap}
+
+/* Nav */
+.nav{
+  display:block;               /* 배경 바 */
+  background:#fff;
+  border-bottom:1px solid var(--line);
+}
+.nav__inner{                   /* 새 컨테이너 래퍼 */
+  max-width: var(--container-w);
+  margin: 0 auto;
+  padding:10px var(--gutter);
+}
+
+/* 5등분 메뉴 유지 */
+.nav__list{
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  width:100%;
+  margin:0 auto;
+  padding:10px 0;
+  list-style:none;  
+  justify-items: center;
+}
+.nav__link{display:inline-flex; --c:#2563eb; align-items:center; height:40px;   justify-content:center;  text-decoration:none; color:var(--ink); font-weight:600; font-size: 20px;}
+.nav__link:hover{background: var(--nav-hover-bg);}
+.nav__link:active{ background: var(--nav-active-bg); }
+.nav__link:focus-visible{ outline:2px solid #93c5fd; outline-offset:2px; }
+.nav__item--dropdown{position:relative; --link-pad:14px;}
+.nav__item--dropdown{
+  position: relative;
+  --link-pad: 14px;              /* nav__link 좌측 패딩과 동일하게 */
+}
+
+/* 상단 메뉴 라벨은 왼쪽 정렬(가운데 정렬이면 '왼쪽 끝' 기준이 애매해져요) */
+.nav__link{
+  justify-content: flex-start;  
+}
+
+/* 드롭다운: li의 왼쪽 + 링크 패딩만큼 들여서, '메뉴명 왼쪽 끝'에 맞춤 */
+.nav__dropdown{
+  position: absolute !important;
+  left: var(--link-pad); right:auto; top:100%;
+  right: auto;
+  top: 100%;
+  transform: translateY(10px);   /* X 이동 제거, Y만 */
+  min-width: 220px;
+  margin: 0;
+  /* 내부 패딩을 변수로: 아래 full-bleed 하이라이트에 사용 */
+  --pad: 8px;
+  padding: var(--pad);
+
+  /* 기존에 섞여 있던 속성 충돌 제거: 아래 값들은 유지 */
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(2,8,20,.08);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .14s ease, transform .14s ease, visibility 0s .14s;
+  z-index: 999;
+}
+ 
+/* 마지막 항목은 화면 밖으로 튀지 않게 오른쪽 정렬로 스위치 */
+.nav__list > li:last-child > .nav__dropdown{
+  right: var(--link-pad);
+  left: auto;
+  transform: translateY(10px);
+}
+/* 드롭다운도 가운데 기준으로 */
+.nav__item--dropdown{ position:relative; }
+.nav__item--dropdown > .nav__dropdown{
+  left:50% !important;
+  right:auto !important;
+  top:100%;
+  transform:translateX(-50%) translateY(12px) !important;
+  min-width: 190px;  /* 최소 크기 */ 
+  justify-items: center;
+} 
+
+.nav__dropdown a:hover{ background:var(--nav-hover-bg,#f1f5f9); }
+/* 드롭다운 표시 트리거 */
+.nav__item--dropdown:hover > .nav__dropdown,
+.nav__item--dropdown:focus-within > .nav__dropdown{
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateY(14px);
+  transition: opacity .12s ease, transform .12s ease, visibility 0s;
+}
+ 
+.nav__dropdown a{
+  display: block;
+  margin: 0 calc(var(--pad) * -1);   /* UL padding 무시하고 꽉 채움 */
+  padding: 12px calc(16px + var(--pad)); /* 좌우 동일 */
+  border-radius: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color .14s ease, color .14s ease;
+}
+.nav__dropdown a:hover{
+  background: var(--nav-hover-bg, #f1f5f9);
+}
+.nav__item--dropdown.is-open > .nav__dropdown{
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateX(-50%) translateY(16px) !important; /* 중앙 정렬 버전 */
+  transition: opacity .14s ease, transform .14s ease, visibility 0s;
+}
+.nav__item--dropdown.is-open > .nav__link{
+  background: var(--nav-hover-bg, #f1f5f9);
+}
+
+.nav__dropdown a:focus-visible{
+  outline: 2px solid #93c5fd; outline-offset: 2px;
+} 
+.nav__dropdown a:hover{
+  background: var(--nav-hover-bg);
+}
+.nav__item--dropdown:hover>.nav__dropdown,
+.nav__item--dropdown:focus-within>.nav__dropdown,
+.nav__item--dropdown:has(.nav__dropdown:hover)>.nav__dropdown{
+  opacity:1; visibility:visible; pointer-events:auto;
+  transform: translateX(-50%) translateY(10px);
+  transition: opacity .12s ease, transform .12s ease, visibility 0s; 
+}
+.nav__item--dropdown::after{content:""; position:absolute; left:0; right:0; top:100%; height:14px;}
+
+/* Breadcrumb */
+.breadcrumb{font-size:12px; color:#6b7a8c; padding:8px clamp(16px,4vw,36px) 12px;}
+.breadcrumb a{color:#516072; text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb .sep{opacity:.45; margin:0 6px}
+
+/* Subhead */
+.subhead-band {
+  background: linear-gradient(180deg,#f9fbfd,#fff);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 24px;
+}
+
+/* 텍스트/이미지 2단 구성 */
+.subhead {
+  display: grid;
+  grid-template-columns: .4fr 2.8fr; /* 텍스트 넓게, 이미지 좁게 */
+  gap: clamp(16px, 4vw, 36px);
+  align-items: center;
+}
+
+/* 첫 줄 강조 */
+.sh-lead {
+  margin: 6px 0 14px 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #000;
+}
+.sh-lead .lead-strong {
+  font-weight: 600;
+  font-size: 1.1em; /* 크기 확대 */
+  letter-spacing: -0.01em;
+  margin-right: 3px;  
+}
+
+/* 2006년/2007년 문장 강조 */
+.sh-lead .text-mark {
+  font-weight: 700;
+  border-radius: 2px;
+  padding: 0 .1em;
+  color: #006ab6; 
+}
+
+/* 설명 글 */
+.sh-list {
+  margin: 0;
+  padding: 0 0 0 18px;
+  color: #374151;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.journal-head {
+  text-align: center; 
+}
+
+/* 한글 타이틀 */
+.jh-title {
+  margin: 0 0 6px;
+  font-size: clamp(22px, 2.2vw, 26px);
+  font-weight: 800;
+  color: #1f2937;
+  letter-spacing: -0.3px;
+}
+
+.jh-title .brand {
+  color: #266bc3; /* 파란색 강조 */
+}
+
+/* 영문 부제 및 ISSN */
+.jh-sub {
+  font-size: 14px;
+  color: #6b7280; 
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.jh-sub .issn {
+  font-style: normal;
+  color: #2563eb;
+}
+
+/* 이미지 오른쪽, 조금 크게 */
+.cover-card {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.cover-card img {
+  max-width: 160px; /* 기존보다 확대 */
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+ 
+
+/* Quick */
+.quick{background:#fff; border-bottom:1px solid var(--line)}
+.quick__row{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; padding:14px clamp(16px, 4vw, 36px)}
+.quick__btn{display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; background:#2d3748; color:#fff; text-decoration:none; font-weight:700; box-shadow:0 6px 20px rgba(0,0,0,.15)}
+.quick__btn .idx{display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:#ffd166; color:var(--chip); font-weight:900; font-size:12px}
+.quick__btn .sub{opacity:.85; font-weight:600; font-size:12px; margin-left:auto}
+.quick__btn:hover{filter:brightness(1.05)}
+
+/* Content */
+.section{margin:22px auto; padding:0 clamp(16px,4vw,36px)}
+.section__title{display:inline-block; background:#2b2d31; color:#fff; padding:10px 12px; border-radius:8px; font-size:14px; font-weight:800}
+.toolbar{margin-top:12px; display:flex; justify-content:flex-end}
+.select{font-size:13px; padding:6px 8px; border:1px solid var(--line); border-radius:8px; background:#fff}
+.paper-list{margin:12px 0 40px 0; border-top:1px solid var(--line)}
+.paper{display:grid; grid-template-columns: auto 1fr; gap:10px; padding:14px 0; border-bottom:1px solid var(--line)}
+.badge{display:inline-block; font-size:11px; font-weight:800; padding:4px 6px; border-radius:6px; background:#e9eef5; color:#1f3b57}
+.paper h4{margin:2px 0 6px 0; font-size:15px}
+.meta{font-size:12px; color:#6b7280}
+
+/* Footer */
+.site-footer {background:#292f32; color:#d1d5db; font-size:13px; margin-top:40px;}
+.footer-inner {padding:10px 60px; display:flex; align-items:flex-start; justify-content:space-between; gap:30px; flex-wrap:wrap;}
+.footer-logo img {max-height:50px; width:auto; filter:brightness(0) invert(1);}
+.footer-info p {margin:0; line-height:1.8; font-size:13px; color:#d1d5db;}
+.footer-info b {color:#fff;}
+.footer-bottom {border-top:1px solid rgba(255,255,255,.15); padding:14px 20px; text-align:center; font-size:12px; color:#9ca3af;}
+
+@media (max-width:980px){
+  .jkda-header__inner{grid-template-columns:1fr auto; grid-template-areas:"left right"; row-gap:10px}
+  .subhead{grid-template-columns:1fr}
+  .quick__row{grid-template-columns:1fr}
+}
+
+
+
+/* 190122학술지(e-BOOK)추가 */
+.kp_journal_e { width:780px; height:382px; background:url(/images/kp_journal_back.png) no-repeat;
+  position: relative;
+  left: 30px;}
+.kp_journal_e img { width:154px; height:210px; padding:81px 0 0 293px;}
+.kp_journal_e p { width:100%; height:30px; text-align:center; margin:35px 0 0 0;}
+.kp_journal_e p img { width:80px; height:28px; padding:0 !important;}
+
+ul.area.journal_tit li { width:184px; text-align:center; border-right:1px solid #f4f4f4; float:left;}
+ul.area.journal_tit li:last-child { border:none !important;}
+ul.area.journal_tit li .jnumber {height:35px; font-size:17px; color:#747678; line-height:19px; margin:15px 0 5px 0; overflow:hidden;}
+ul.area.journal_tit li .jnumber a { color:#282828;}
+ul.area.journal_tit li .jnumber a:hover { color:#006ab6; }
+ 

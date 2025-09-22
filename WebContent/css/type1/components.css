@@ -1,0 +1,4 @@
+@charset "UTF-8";
+/* Component-specific tweaks (breadcrumb current, etc.) */
+.breadcrumb [aria-current="page"]{font-weight:700; color:#1f2937; pointer-events:none;}
+.breadcrumb li > *{max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
